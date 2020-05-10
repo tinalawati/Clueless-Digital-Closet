@@ -38,12 +38,12 @@ class DigitalCloset:
         self.bottom_images = self.get_image_file_names(image_directories, ContentType.bottom.value)
 
         # Current images.
-        self.current_top_image_name = self.top_images[0]
-        self.current_bottom_image_name = self.bottom_images[0]
+        self.current_top_image = self.top_images[0]
+        self.current_bottom_image = self.bottom_images[0]
 
         # File paths of current images.
-        self.current_top_image_path = os.path.join(image_directories[ContentType.top.value], self.current_top_image_name)
-        self.current_bottom_image_path = os.path.join(image_directories[ContentType.bottom.value], self.current_bottom_image_name)
+        self.current_top_image_path = os.path.join(image_directories[ContentType.top.value], self.current_top_image)
+        self.current_bottom_image_path = os.path.join(image_directories[ContentType.bottom.value], self.current_bottom_image)
 
         # Main frame.
         self.root.title(WINDOW_TITLE)
@@ -89,31 +89,31 @@ class DigitalCloset:
 
     def get_next_top(self):
         new_top_image = self.get_new_image_file_name(ContentType.top.value)
-        self.current_top_image_name = new_top_image
+        self.current_top_image = new_top_image
         self.update_frame_content(ContentType.top.value, new_top_image)
 
     def get_previous_top(self):
         new_top_image = self.get_new_image_file_name(ContentType.top.value, next_item=False)
-        self.current_top_image_name = new_top_image
+        self.current_top_image = new_top_image
         self.update_frame_content(ContentType.top.value, new_top_image)
 
     def get_next_bottom(self):
         new_bottom_image = self.get_new_image_file_name(ContentType.bottom.value)
-        self.current_bottom_image_name = new_bottom_image
+        self.current_bottom_image = new_bottom_image
         self.update_frame_content(ContentType.bottom.value, new_bottom_image)
 
     def get_previous_bottom(self):
         new_bottom_image = self.get_new_image_file_name(ContentType.bottom.value, next_item=False)
-        self.current_bottom_image_name = new_bottom_image
+        self.current_bottom_image = new_bottom_image
         self.update_frame_content(ContentType.bottom.value, new_bottom_image)
 
     def get_new_image_file_name(self, content_type, next_item=True):
         if content_type == ContentType.top.value:
             all_image_file_names = self.top_images
-            current_image_file_name_index = all_image_file_names.index(self.current_top_image_name)
+            current_image_file_name_index = all_image_file_names.index(self.current_top_image)
         elif content_type == ContentType.bottom.value:
             all_image_file_names = self.bottom_images
-            current_image_file_name_index = all_image_file_names.index(self.current_bottom_image_name)
+            current_image_file_name_index = all_image_file_names.index(self.current_bottom_image)
 
         total_image_file_names = len(all_image_file_names)
 
