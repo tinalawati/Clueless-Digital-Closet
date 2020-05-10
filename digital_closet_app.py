@@ -5,6 +5,8 @@ import tkinter as tk
 from enum import Enum
 from PIL import Image, ImageTk
 
+from helpers import get_duplicates
+
 
 WINDOW_TITLE = "Clueless Digital Closet"
 MAIN_FRAME_HEIGHT = 600
@@ -75,8 +77,7 @@ class DigitalCloset:
         self.bottom_next_button = tk.Button(self.bottom_frame, text="Next bottom", command=self.get_next_bottom)
         self.bottom_next_button.pack(side=tk.RIGHT)
 
-    @staticmethod
-    def validate_image_directories(directories):
+    def validate_image_directories(self, directories):
         """Carry out validation checks on the given image directories.
 
         :param directories: Directory paths for all content types.
@@ -85,9 +86,23 @@ class DigitalCloset:
         if not isinstance(directories, dict):
             sys.exit("Given directories must be an instance of a dictionary.")
 
+        exit_msg = ""
+
         for content_type in ContentType:
             if not directories.get(content_type.value):
-                sys.exit(f"No directory found for content type '{content_type.value}' within given directories.")
+                exit_msg += f"No directory found for content type '{content_type.value}' within given directories.\n"
+
+            all_image_file_names = self.get_image_file_names(directories, content_type)
+            duplicate_file_names = get_duplicates(all_image_file_names)
+
+            if duplicate_file_names:
+                exit_msg += (
+                    f"Duplicate file names detected in directory for content type '{content_type.value}'. They are: "
+                    f"{', '.join(duplicate_file_names)}.\n"
+                )
+
+        if exit_msg:
+            sys.exit(exit_msg)
 
     @staticmethod
     def get_image_file_names(directories, content_type):
@@ -100,7 +115,6 @@ class DigitalCloset:
         :return: File names for image files.
         :rtype: list
         """
-        # TODO: Ensure no duplicate file names
         return [file_name for file_name in os.listdir(directories[content_type])]
 
     def create_individual_frame_content(self, image_path, frame):
