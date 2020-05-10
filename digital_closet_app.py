@@ -1,11 +1,11 @@
 import os
 import tkinter as tk
+
 from PIL import Image, ImageTk
 from enum import Enum
 
 
-CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
-WINDOW_TITLE = "Digital Closet"
+WINDOW_TITLE = "Clueless Digital Closet"
 MAIN_FRAME_HEIGHT = 600
 MAIN_FRAME_WIDTH = 350
 INDIVIDUAL_FRAME_HEIGHT = 250
@@ -13,12 +13,22 @@ INDIVIDUAL_FRAME_WIDTH = 250
 
 
 class ContentType(Enum):
+    """Different types of content to be displayed in individual frames."""
     top = "top"
     bottom = "bottom"
 
 
 class DigitalCloset:
+    """Digital representation of a person's closet."""
+
     def __init__(self, root, image_directories):
+        """Create an instance of a digital closet, complete with necessary images and navigation functions.
+
+        :param root: #TODO
+        :type root: #TODO
+        :param image_directories: Image directory paths for each content type.
+        :type image_directories: dict
+        """
         # Initialise.
         self.root = root
         self.image_directories = image_directories
@@ -133,10 +143,13 @@ class DigitalCloset:
         frame_content.image = image
 
 
+# Launch an instance of a digital closet when the script is run.
 if __name__ == "__main__":
     root = tk.Tk()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     image_directories = {
-        "top": os.path.join(CURRENT_DIRECTORY, "top_images"), "bottom": os.path.join(CURRENT_DIRECTORY, "bottom_images")
+        "top": os.path.join(current_dir, "top_images"),
+        "bottom": os.path.join(current_dir, "bottom_images")
     }
     DigitalCloset(root, image_directories)
     root.mainloop()
