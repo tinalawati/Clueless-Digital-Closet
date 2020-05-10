@@ -89,17 +89,17 @@ class DigitalCloset:
         exit_msg = ""
 
         for content_type in ContentType:
-            if not directories.get(content_type.value):
+            if directories.get(content_type.value):
+                all_image_file_names = self.get_image_file_names(directories, content_type)
+                duplicate_file_names = get_duplicates(all_image_file_names)
+
+                if duplicate_file_names:
+                    exit_msg += (
+                        f"Duplicate file names detected in directory for content type '{content_type.value}'. They "
+                        f"are: {', '.join(duplicate_file_names)}.\n"
+                    )
+            else:
                 exit_msg += f"No directory found for content type '{content_type.value}' within given directories.\n"
-
-            all_image_file_names = self.get_image_file_names(directories, content_type)
-            duplicate_file_names = get_duplicates(all_image_file_names)
-
-            if duplicate_file_names:
-                exit_msg += (
-                    f"Duplicate file names detected in directory for content type '{content_type.value}'. They are: "
-                    f"{', '.join(duplicate_file_names)}.\n"
-                )
 
         if exit_msg:
             sys.exit(exit_msg)
