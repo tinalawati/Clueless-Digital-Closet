@@ -90,7 +90,7 @@ class DigitalCloset:
 
         for content_type in ContentType:
             if directories.get(content_type.value):
-                all_image_file_names = self.get_image_file_names(directories, content_type)
+                all_image_file_names = self.get_image_file_names(directories, content_type.value)
                 duplicate_file_names = get_duplicates(all_image_file_names)
 
                 if duplicate_file_names:
