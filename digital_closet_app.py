@@ -48,7 +48,7 @@ class DigitalCloset:
         # Create the individual frame for tops.
         self.top_frame = tk.Frame(self.root)
         current_top_image_path = os.path.join(image_directories[ContentType.top.value], self.current_top_image)
-        self.top_frame_content = self.create_frame_content(current_top_image_path, self.top_frame)
+        self.top_frame_content = self.create_individual_frame_content(current_top_image_path, self.top_frame)
         self.top_frame_content.pack(side=tk.TOP)
         self.top_frame.pack()
 
@@ -61,7 +61,7 @@ class DigitalCloset:
         # Create the individual frame for bottoms.
         self.bottom_frame = tk.Frame(self.root)
         current_bottom_image_path = os.path.join(image_directories[ContentType.bottom.value], self.current_bottom_image)
-        self.bottom_frame_content = self.create_frame_content(current_bottom_image_path, self.bottom_frame)
+        self.bottom_frame_content = self.create_individual_frame_content(current_bottom_image_path, self.bottom_frame)
         self.bottom_frame_content.pack(side=tk.BOTTOM)
         self.bottom_frame.pack()
 
@@ -71,44 +71,84 @@ class DigitalCloset:
         self.bottom_next_button = tk.Button(self.bottom_frame, text="Next bottom", command=self.get_next_bottom)
         self.bottom_next_button.pack(side=tk.RIGHT)
 
-    def get_image_file_names(self, directories, image_type):
+    @staticmethod
+    def get_image_file_names(directories, content_type):
+        """For the given content type, get the file names of images in the relevant directory.
+
+        :param directories: Directory paths for all content types.
+        :type directories: dict
+        :param content_type: Type of content.
+        :type content_type: ContentType choice value
+        :return: File names for image files.
+        :rtype: list
+        """
         # TODO: Check there is image_type as key in directories dict
         # TODO: Ensure no duplicate file names
-        return [file_name for file_name in os.listdir(directories[image_type])]
+        return [file_name for file_name in os.listdir(directories[content_type])]
 
-    def create_frame_content(self, image_path, frame):
+    def create_individual_frame_content(self, image_path, frame):
+        """Return the content to be displayed in an individual frame.
+
+        :param image_path: File path for an image.
+        :type image_path: str
+        :param frame: Individual frame.
+        :type frame: #TODO
+        :return: The content to be displayed in the frame.
+        :rtype: #TODO
+        """
         image = self.get_image(image_path)
         image_content = tk.Label(frame, image=image)
         image_content.image = image
         return image_content
 
-    def get_image(self, image_path):
+    @staticmethod
+    def get_image(image_path):
+        """Return an image based on the requested image path.
+
+        :param image_path: File path for an image.
+        :type image_path: str
+        :return: Image.
+        :rtype: #TODO
+        """
         image = Image.open(image_path)
         image = image.resize((INDIVIDUAL_FRAME_WIDTH, INDIVIDUAL_FRAME_HEIGHT))
         image = ImageTk.PhotoImage(image)
         return image
 
     def get_next_top(self):
+        """Get the next top to be displayed in the top frame."""
         new_top_image = self.get_new_image_file_name(ContentType.top.value)
         self.current_top_image = new_top_image
         self.update_frame_content(ContentType.top.value, new_top_image)
 
     def get_previous_top(self):
+        """Get the previous top to be displayed in the top frame."""
         new_top_image = self.get_new_image_file_name(ContentType.top.value, next_item=False)
         self.current_top_image = new_top_image
         self.update_frame_content(ContentType.top.value, new_top_image)
 
     def get_next_bottom(self):
+        """Get the next bottom to be displayed in the bottom frame."""
         new_bottom_image = self.get_new_image_file_name(ContentType.bottom.value)
         self.current_bottom_image = new_bottom_image
         self.update_frame_content(ContentType.bottom.value, new_bottom_image)
 
     def get_previous_bottom(self):
+        """Get the previous bottom to be displayed in the bottom frame."""
         new_bottom_image = self.get_new_image_file_name(ContentType.bottom.value, next_item=False)
         self.current_bottom_image = new_bottom_image
         self.update_frame_content(ContentType.bottom.value, new_bottom_image)
 
     def get_new_image_file_name(self, content_type, next_item=True):
+        """Get the file name of the new image to be displayed.
+
+        :param content_type: Type of content.
+        :type content_type: ContentType choice value
+        :param next_item: Whether to display the next item (True) or whether to display the previous item (False).
+        :type next_item: bool
+        :return: File name of an image.
+        :rtype: str
+        """
         if content_type == ContentType.top.value:
             all_image_file_names = self.top_images
             current_image_file_name_index = all_image_file_names.index(self.current_top_image)
@@ -132,6 +172,13 @@ class DigitalCloset:
         return new_image_file_name
 
     def update_frame_content(self, content_type, new_image_file_name):
+        """Update the content of the individual frame.
+
+        :param content_type: Type of content.
+        :type content_type: ContentType choice value
+        :param new_image_file_name: File name of the new image to be displayed.
+        :type new_image_file_name: str
+        """
         new_image_file_path = os.path.join(self.image_directories[content_type], new_image_file_name)
         image = self.get_image(new_image_file_path)
 
