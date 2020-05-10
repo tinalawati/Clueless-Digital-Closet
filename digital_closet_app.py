@@ -24,8 +24,8 @@ class DigitalCloset:
     def __init__(self, root, image_directories):
         """Create an instance of a digital closet, complete with necessary images and navigation functions.
 
-        :param root: #TODO
-        :type root: #TODO
+        :param root: Root
+        :type root: tkinter.Tk
         :param image_directories: Image directory paths for each content type.
         :type image_directories: dict
         """
@@ -92,9 +92,9 @@ class DigitalCloset:
         :param image_path: File path for an image.
         :type image_path: str
         :param frame: Individual frame.
-        :type frame: #TODO
+        :type frame: tkinter.Frame
         :return: The content to be displayed in the frame.
-        :rtype: #TODO
+        :rtype: tkinter.Label
         """
         image = self.get_image(image_path)
         image_content = tk.Label(frame, image=image)
@@ -108,7 +108,7 @@ class DigitalCloset:
         :param image_path: File path for an image.
         :type image_path: str
         :return: Image.
-        :rtype: #TODO
+        :rtype: PIL.ImageTk.PhotoImage
         """
         image = Image.open(image_path)
         image = image.resize((INDIVIDUAL_FRAME_WIDTH, INDIVIDUAL_FRAME_HEIGHT))
