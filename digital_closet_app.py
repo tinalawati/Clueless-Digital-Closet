@@ -1,8 +1,9 @@
 import os
+import sys
 import tkinter as tk
 
-from PIL import Image, ImageTk
 from enum import Enum
+from PIL import Image, ImageTk
 
 
 WINDOW_TITLE = "Clueless Digital Closet"
@@ -29,6 +30,9 @@ class DigitalCloset:
         :param image_directories: Image directory paths for each content type.
         :type image_directories: dict
         """
+        # Carry out validation checks.
+        self.validate_image_directories(image_directories)
+
         # Initialise.
         self.root = root
         self.image_directories = image_directories
@@ -72,6 +76,20 @@ class DigitalCloset:
         self.bottom_next_button.pack(side=tk.RIGHT)
 
     @staticmethod
+    def validate_image_directories(directories):
+        """Carry out validation checks on the given image directories.
+
+        :param directories: Directory paths for all content types.
+        :type directories: dict
+        """
+        if not isinstance(directories, dict):
+            sys.exit("Given directories must be an instance of a dictionary.")
+
+        for content_type in ContentType:
+            if not directories.get(content_type.value):
+                sys.exit(f"No directory found for content type '{content_type.value}' within given directories.")
+
+    @staticmethod
     def get_image_file_names(directories, content_type):
         """For the given content type, get the file names of images in the relevant directory.
 
@@ -82,7 +100,6 @@ class DigitalCloset:
         :return: File names for image files.
         :rtype: list
         """
-        # TODO: Check there is image_type as key in directories dict
         # TODO: Ensure no duplicate file names
         return [file_name for file_name in os.listdir(directories[content_type])]
 
