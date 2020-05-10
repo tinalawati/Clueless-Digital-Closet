@@ -33,38 +33,39 @@ class DigitalCloset:
         self.root = root
         self.image_directories = image_directories
 
-        # File names of all images.
+        # Names of all images.
         self.top_images = self.get_image_file_names(image_directories, ContentType.top.value)
         self.bottom_images = self.get_image_file_names(image_directories, ContentType.bottom.value)
 
-        # Current images.
+        # Names of current images.
         self.current_top_image = self.top_images[0]
         self.current_bottom_image = self.bottom_images[0]
 
-        # File paths of current images.
-        self.current_top_image_path = os.path.join(image_directories[ContentType.top.value], self.current_top_image)
-        self.current_bottom_image_path = os.path.join(image_directories[ContentType.bottom.value], self.current_bottom_image)
-
-        # Main frame.
+        # Create the main frame.
         self.root.title(WINDOW_TITLE)
         self.root.geometry(f"{MAIN_FRAME_WIDTH}x{MAIN_FRAME_HEIGHT}")
 
-        # Individual frames and buttons.
+        # Create the individual frame for tops.
         self.top_frame = tk.Frame(self.root)
-        self.top_frame_content = self.create_frame_content(self.current_top_image_path, self.top_frame)
+        current_top_image_path = os.path.join(image_directories[ContentType.top.value], self.current_top_image)
+        self.top_frame_content = self.create_frame_content(current_top_image_path, self.top_frame)
         self.top_frame_content.pack(side=tk.TOP)
         self.top_frame.pack()
 
+        # Create navigation buttons for the top frame.
         self.top_prev_button = tk.Button(self.top_frame, text="Previous top", command=self.get_previous_top)
         self.top_prev_button.pack(side=tk.LEFT)
         self.top_next_button = tk.Button(self.top_frame, text="Next top", command=self.get_next_top)
         self.top_next_button.pack(side=tk.RIGHT)
 
+        # Create the individual frame for bottoms.
         self.bottom_frame = tk.Frame(self.root)
-        self.bottom_frame_content = self.create_frame_content(self.current_bottom_image_path, self.bottom_frame)
+        current_bottom_image_path = os.path.join(image_directories[ContentType.bottom.value], self.current_bottom_image)
+        self.bottom_frame_content = self.create_frame_content(current_bottom_image_path, self.bottom_frame)
         self.bottom_frame_content.pack(side=tk.BOTTOM)
         self.bottom_frame.pack()
 
+        # Create navigation buttons for the bottom frame.
         self.bottom_prev_button = tk.Button(self.bottom_frame, text="Previous bottom", command=self.get_previous_bottom)
         self.bottom_prev_button.pack(side=tk.LEFT)
         self.bottom_next_button = tk.Button(self.bottom_frame, text="Next bottom", command=self.get_next_bottom)
@@ -148,8 +149,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     current_dir = os.path.dirname(os.path.realpath(__file__))
     image_directories = {
-        "top": os.path.join(current_dir, "top_images"),
-        "bottom": os.path.join(current_dir, "bottom_images")
+        "top": os.path.join(current_dir, "top_images"), "bottom": os.path.join(current_dir, "bottom_images")
     }
     DigitalCloset(root, image_directories)
     root.mainloop()
