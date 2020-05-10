@@ -98,6 +98,8 @@ class DigitalCloset:
                         f"Duplicate file names detected in directory for content type '{content_type.value}'. They "
                         f"are: {', '.join(duplicate_file_names)}.\n"
                     )
+
+                # TODO: Test this.
             else:
                 exit_msg += f"No directory found for content type '{content_type.value}' within given directories.\n"
 
