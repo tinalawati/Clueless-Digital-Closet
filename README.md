@@ -5,7 +5,7 @@ Inspired by Cher's digital closet in Clueless, this app is designed make choosin
 ## Usage
 
 Simply replace the default images with your own images inside the 'top_images' and 'bottom_images' directories.
-Then, navigate to the 'digital_closet_app' folder and run the following command:
+Then, run the following command:
 
 ```python
 python digital_closet_app.py
