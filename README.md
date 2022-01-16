@@ -1,4 +1,4 @@
-# :sparkles: CLUELESS DIGITAL CLOSET :sparkles:
+# :sparkles: DIGITAL CLOSET :sparkles:
 
 Inspired by Cher's digital closet in Clueless, this app is designed make choosing your outfits easier in the morning.
 

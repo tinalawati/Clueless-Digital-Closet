@@ -8,11 +8,11 @@ from PIL import Image, ImageTk
 from helpers import get_duplicates
 
 
-WINDOW_TITLE = "Clueless Digital Closet"
-MAIN_FRAME_HEIGHT = 600
-MAIN_FRAME_WIDTH = 350
-INDIVIDUAL_FRAME_HEIGHT = 250
-INDIVIDUAL_FRAME_WIDTH = 250
+WINDOW_TITLE = "Digital Closet"
+MAIN_FRAME_HEIGHT = 650
+MAIN_FRAME_WIDTH = 300
+INDIVIDUAL_FRAME_HEIGHT = 280
+INDIVIDUAL_FRAME_WIDTH = 200
 
 
 class ContentType(Enum):
